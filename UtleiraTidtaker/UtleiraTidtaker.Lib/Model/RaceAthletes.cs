@@ -91,7 +91,7 @@
                             break;
                         default:
                             //176 til 200 på Trim
-                            i = 175;
+                            i = 0;
                             break;
                     }
                 }

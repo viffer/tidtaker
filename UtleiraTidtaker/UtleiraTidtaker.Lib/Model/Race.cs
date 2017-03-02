@@ -90,45 +90,77 @@ namespace UtleiraTidtaker.Lib.Model
                 raceagestring = "16";
             }
 
-            key = male ? "M" : "K";
+            key = male ? "G" : "J";
             var gender = male ? "Gutter" : "Jenter";
             this.name = name;
             switch (this.name.ToLowerInvariant())
             {
                 case "g 8 år":
-                    key = string.Format("{0}{1}500M", raceage, key);
                     _raceTime = new DateTime(2017, 3, 4, 11, 0, 0);
-                    this.name = string.Format("{0} {1} {2} år", gender, this.name, raceagestring);
                     break;
                 case "j 8 år":
-                    key = string.Format("{0}{1}500M", raceage, key);
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
-                    this.name = string.Format("{0} {1} {2} år", gender, this.name, raceagestring);
                     break;
                 case "g 9 år":
-                    key = string.Format("{0}{1}1KM", raceage, key);
+                    //key = $"{raceage}{key}1KM";
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
                     break;
                 case "j 9 år":
-                    key = string.Format("{0}{1}1KM", raceage, key);
+                    //key = $"{raceage}{key}1KM";
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
                     break;
-                case "2 km barneløp 7-12":
-                    key = "2KM";
-                    _raceTime = new DateTime(2016, 6, 18, 11, 10, 0);
-                    this.name += " år";
+                case "g 10 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
                     break;
-                case "500m barneløp 4-6":
-                    key = "500M";
-                    _raceTime = new DateTime(2016, 6, 18, 11, 0, 0);
-                    this.name += " år";
+                case "j 10 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 11 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 11 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 12 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 12 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 13 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 13 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 14 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 14 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 15 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 15 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "g 16 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    break;
+                case "j 16 år":
+                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
                     break;
                 default:
-                    key = this.name;
+                    //key = this.name;
                     _raceTime = new DateTime(2017, 3, 4, 11, 0, 0);
-                    this.name = $"{gender} {name} {raceagestring}";
+                    //this.name = $"{gender} {name} {raceagestring}";
                     break;
             }
+            //key = $"{raceage}{key}{raceagestring}";
+            key = $"{key}{raceagestring}";
+            //this.name = $"{gender} {raceagestring} år";
+            this.name = $"{gender}{raceagestring}";
         }
 
         public int Id { get; set; }

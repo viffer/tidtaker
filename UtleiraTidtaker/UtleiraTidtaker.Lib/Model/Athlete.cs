@@ -15,7 +15,7 @@ namespace UtleiraTidtaker.Lib.Model
         public string RaceName
         {
             get { return Race.key; }
-            set { Race = new Race(value, Birthdate.Year, Gender.Equals("mann", StringComparison.OrdinalIgnoreCase)); }
+            set { Race = new Race(value, Birthdate.Year, Gender.Equals("m", StringComparison.OrdinalIgnoreCase)); }
         }
 
         public Race Race { get; private set; }
