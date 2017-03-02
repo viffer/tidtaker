@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using UtleiraTidtaker.Lib.Utilities;
-
-namespace UtleiraTidtaker.Lib.Model
+﻿namespace UtleiraTidtaker.Lib.Model
 {
+    using System;
+    using UtleiraTidtaker.Lib.Utilities;
+
     public class RaceAthlete
     {
         /*
@@ -34,6 +33,8 @@ namespace UtleiraTidtaker.Lib.Model
 
         private string _startTime = null;
 
+        private DateTime _raceDTG = new DateTime(2017, 3, 4, 11, 0, 0);
+
         private readonly Athlete _athlete;
 
         public RaceAthlete(Athlete athlete)
@@ -58,27 +59,28 @@ namespace UtleiraTidtaker.Lib.Model
 
         public string pName
         {
-            get { return _athlete.Name; }
+            get { return _athlete.Name ?? ""; }
         }
 
         public string sName
         {
-            get { return _athlete.Surname; }
+            get { return _athlete.Surname ?? ""; }
         }
 
         public string club
         {
-            get { return _athlete.Club; }
+            get { return _athlete.Club ?? ""; }
         }
 
         public string run
         {
-            get { return _athlete.Race.key; }
+            get { return _athlete.Race != null ? _athlete.Race.key : ""; }
         }
 
         public string startTime
         {
-            get { return RaceTimeParser.GetTimestring(_athlete.Race.dStartTime.AddSeconds(15 * (_athlete.Id - _athlete.Race.Id))); }
+            get { return _athlete.Race != null ? RaceTimeParser.GetTimestring(GetStartTime()) : ""; }
+            //get { return _athlete.Race != null ? RaceTimeParser.GetTimestring(_athlete.Race.dStartTime.AddSeconds(15 * (_athlete.Id - _athlete.Race.Id))) : ""; }
             //get { return RaceTimeParser.GetTimestring(_athlete.Race.dStartTime); }// .AddSeconds(15 * (_athlete.Id - _athlete.Race.Id))); }
         }
 
@@ -90,6 +92,26 @@ namespace UtleiraTidtaker.Lib.Model
         public int GetLength()
         {
             return _athlete.Race.GetLength();
+        }
+
+        public string GetGender()
+        {
+            return _athlete.Gender;
+        }
+
+        public Race GetRace()
+        {
+            return _athlete.Race;
+        }
+
+        public void SetRace(Race race)
+        {
+            _athlete.SetRace(race);
+        }
+
+        public DateTime GetStartTime()
+        {
+            return _raceDTG.AddSeconds(15 * (_athlete.Id - _athlete.Race.Id - 1));
         }
     }
 }

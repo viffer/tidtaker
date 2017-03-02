@@ -93,63 +93,82 @@ namespace UtleiraTidtaker.Lib.Model
             key = male ? "G" : "J";
             var gender = male ? "Gutter" : "Jenter";
             this.name = name;
+            var raceLength = "";
             switch (this.name.ToLowerInvariant())
             {
                 case "g 8 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 0, 0);
+                    raceLength = "500 m";
                     break;
                 case "j 8 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
+                    raceLength = "500 m";
                     break;
                 case "g 9 år":
                     //key = $"{raceage}{key}1KM";
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
+                    raceLength = "1 km";
                     break;
                 case "j 9 år":
                     //key = $"{raceage}{key}1KM";
                     _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
+                    raceLength = "1 km";
                     break;
                 case "g 10 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "1 km";
                     break;
                 case "j 10 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "1 km";
                     break;
                 case "g 11 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "2 km";
                     break;
                 case "j 11 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "2 km";
                     break;
                 case "g 12 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "2 km";
                     break;
                 case "j 12 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "2 km";
                     break;
                 case "g 13 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "3 km";
                     break;
                 case "j 13 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "3 km";
                     break;
                 case "g 14 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "3 km";
                     break;
                 case "j 14 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "3 km";
                     break;
                 case "g 15 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "5 km";
                     break;
                 case "j 15 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "5 km";
                     break;
                 case "g 16 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "5 km";
                     break;
                 case "j 16 år":
                     _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
+                    raceLength = "5 km";
                     break;
                 default:
                     //key = this.name;
@@ -160,7 +179,7 @@ namespace UtleiraTidtaker.Lib.Model
             //key = $"{raceage}{key}{raceagestring}";
             key = $"{key}{raceagestring}";
             //this.name = $"{gender} {raceagestring} år";
-            this.name = $"{gender}{raceagestring}";
+            this.name = $"{gender} {raceagestring} år - {raceLength}";
         }
 
         public int Id { get; set; }
@@ -240,6 +259,11 @@ namespace UtleiraTidtaker.Lib.Model
             {
                 return Length < 3000 ? "False" : "True";
             }
+        }
+
+        public void SetStartTime(DateTime value)
+        {
+            _raceTime = value;
         }
     }
 }

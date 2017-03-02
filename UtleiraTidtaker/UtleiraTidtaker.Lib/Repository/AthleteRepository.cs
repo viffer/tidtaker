@@ -47,7 +47,7 @@
                     RaceName = row[GetDictionaryValue(dict, "EntryClassShortName")].ToString(),
                 };
                 //_athletes.Add(athlete);
-                sortedathletes.Add(string.Format("{0:0000000}{1:0000}", athlete.Id, athlete.Key), athlete);
+                sortedathletes.Add($"{athlete.Id:0000000}{athlete.Key:0000}", athlete);
             }
             _athletes = sortedathletes.Values;
         }

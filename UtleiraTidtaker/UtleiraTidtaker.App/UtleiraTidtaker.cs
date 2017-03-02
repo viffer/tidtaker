@@ -86,13 +86,14 @@
 
             _athleteRepository = new AthleteRepository(data);
 
-            var races = _athleteRepository.GetRaces().ToList();
-            textRaces.Text = Newtonsoft.Json.JsonConvert.SerializeObject(races);
+            //var races = _athleteRepository.GetRaces().ToList();
+            //textRaces.Text = Newtonsoft.Json.JsonConvert.SerializeObject(races);
 
             Application.DoEvents();
 
             _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), _excelRepository.GetFiletime());
-
+            var races = _raceAthletes.GetRaces();
+            textRaces.Text = Newtonsoft.Json.JsonConvert.SerializeObject(races);
             textAthletes.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_raceAthletes);
 
             _stopwatch.Stop();

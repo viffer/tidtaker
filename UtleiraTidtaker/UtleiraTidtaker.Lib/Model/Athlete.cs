@@ -19,5 +19,10 @@ namespace UtleiraTidtaker.Lib.Model
         }
 
         public Race Race { get; private set; }
+
+        public void SetRace(Race race)
+        {
+            this.Race = race;
+        }
     }
 }
