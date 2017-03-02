@@ -185,38 +185,29 @@ namespace UtleiraTidtaker.Lib.Model
             {
                 switch (key.ToLowerInvariant())
                 {
-                    case "1d10km":
-                    case "2d10km":
-                    case "3d10km":
-                    case "4d10km":
-                    case "5d10km":
-                    case "6d10km":
-                    case "1m10km":
-                    case "2m10km":
-                    case "3m10km":
-                    case "4m10km":
-                    case "5m10km":
-                    case "6m10km":
-                        return 10000;
-                    case "1d5km":
-                    case "2d5km":
-                    case "3d5km":
-                    case "4d5km":
-                    case "5d5km":
-                    case "6d5km":
-                    case "1m5km":
-                    case "2m5km":
-                    case "3m5km":
-                    case "4m5km":
-                    case "5m5km":
-                    case "6m5km":
-                        return 5000;
-                    case "t5km":
-                        return 4999;
-                    case "2km":
-                        return 2000;
-                    case "500m":
+                    case "g8":
+                    case "j8":
                         return 500;
+                    case "g9":
+                    case "j9":
+                    case "g10":
+                    case "j10":
+                        return 1000;
+                    case "g11":
+                    case "j11":
+                    case "g12":
+                    case "j12":
+                        return 2000;
+                    case "g13":
+                    case "j13":
+                    case "g14":
+                    case "j14":
+                        return 3000;
+                    case "g15":
+                    case "j15":
+                    case "g16":
+                    case "j16":
+                        return 5000;
                     default:
                         return -1;
                 }

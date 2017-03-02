@@ -76,22 +76,26 @@
                     {
                         case 10000:
                             //200 til 275 på 10km
-                            i = 199;
+                            i = 1000;
                             break;
                         case 5000:
                             //76 til 200 på 5km
-                            i = 75;
+                            i = 300;
+                            break;
+                        case 3000:
+                            //76 til 200 på 5km
+                            i = 200;
                             break;
                         case 2000:
                             // 1-75 på 2km
-                            i = 0;
+                            i = 100;
                             break;
                         case 500:
-                            i = 1000;
+                            i = 0;
                             break;
                         default:
                             //176 til 200 på Trim
-                            i = 0;
+                            i = 2000;
                             break;
                     }
                 }
