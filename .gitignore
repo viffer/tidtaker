@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/UtleiraTidtaker/.vs
+/UtleiraTidtaker/packages
+/UtleiraTidtaker/UtleiraTidtaker.App/bin
+/UtleiraTidtaker/UtleiraTidtaker.App/obj
+/UtleiraTidtaker/UtleiraTidtaker.Web/bin
+/UtleiraTidtaker/UtleiraTidtaker.Web/obj
+/UtleiraTidtaker/UtleiraTidtaker.DataReader/bin
+/UtleiraTidtaker/UtleiraTidtaker.DataReader/obj
+/UtleiraTidtaker/UtleiraTidtaker.Lib/bin
+/UtleiraTidtaker/UtleiraTidtaker.Lib/obj
