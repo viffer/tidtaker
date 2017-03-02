@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "ISY.GIS.IsyAttachment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form enctype="multipart/form-data" method="post" action="@Url.Content("~/api/v1/upload/fileshtml")" id="ajaxUploadForm" novalidate="novalidate">
+
+    <fieldset>
+        <legend>Last opp vedlegg</legend>
+        <ol>
+            <li>
+                <label>Vedlegg</label>
+                <input type="file" style="width: 317px" name="file" id="fileInput" multiple>
+                <br />
+            </li>
+            <li>
+                <input type="submit" value="Upload" id="ajaxUploadButton" class="btn-primary">
+            </li>
+        </ol>
+    </fieldset>
+</form>
