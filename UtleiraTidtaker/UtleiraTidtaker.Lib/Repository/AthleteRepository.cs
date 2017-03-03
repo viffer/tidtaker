@@ -46,6 +46,14 @@
                     Birthdate = DateTime.Parse($"{row[GetDictionaryValue(dict, "BirthYear")]}-{row[GetDictionaryValue(dict, "BirthMonth")]}-{row[GetDictionaryValue(dict, "BirthDay")]}"),
                     RaceName = row[GetDictionaryValue(dict, "EntryClassShortName")].ToString(),
                 };
+                // Fixing wrong ages:
+
+                if (athlete.Id == 208254290)
+                {
+                    var old = athlete.Birthdate;
+                    athlete.Birthdate = new DateTime(2007, old.Month, old.Day);
+                }
+
                 //_athletes.Add(athlete);
                 sortedathletes.Add($"{athlete.Id:0000000}{athlete.Key:0000}", athlete);
             }
