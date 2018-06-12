@@ -34,12 +34,14 @@ namespace UtleiraTidtaker.Lib.Model
          * */
 
         private readonly DateTime _filetime;
+        private readonly DateTime _racetime;
         private List<Athlete> _athletes;
         private List<RaceAthlete> _raceathletes;
 
-        public RaceAthletes(List<Athlete> athletes, DateTime filetime)
+        public RaceAthletes(List<Athlete> athletes, DateTime racetime, DateTime filetime)
         {
             _filetime = filetime;
+            _racetime = racetime;
             _athletes = athletes;
             SetStartNumbers();
         }
@@ -64,6 +66,8 @@ namespace UtleiraTidtaker.Lib.Model
             }
             var i = 0;
             var previousLength = 0;
+            RaceAthlete previousAthlete = null;
+            RaceAthlete lastAthlete = null;
             _raceathletes = new List<RaceAthlete>();
             foreach (var element in sortedList)
             {
@@ -72,31 +76,72 @@ namespace UtleiraTidtaker.Lib.Model
                 if (previousLength != newLength)
                 {
                     previousLength = newLength;
+                    var next = -1;
                     switch (newLength)
                     {
                         case 10000:
                             //200 til 299 på 10km
-                            i = 199;
+                            next = 199;
                             break;
                         case 5000:
                             //1 til 99 på 5km
-                            i = 0;
+                            next = 0;
                             break;
                         case 2000:
                             // 400-499 på 2km
-                            i = 399;
+                            next = 399;
                             break;
                         case 600:
-                            i = 449;
+                            next = 449;
                             break;
                         default:
                             //400++ på Trim
-                            i = 499;
+                            next = 499;
                             break;
                     }
+
+                    if (previousAthlete != null)
+                    {
+                        // fill in the gaps
+                        for (var j = i + 1; j < next; j++)
+                        {
+                            previousAthlete = new RaceAthlete(new Athlete(previousAthlete.GetAthlete()));
+                            previousAthlete.SetStartNo(j);
+                            if (_raceathletes.Any(x => x.startNo == j.ToString()))
+                            {
+                                continue;
+                            }
+                            _raceathletes.Add(previousAthlete);
+                        }
+                    }
+
+                    i = next;
                 }
                 athlete.SetStartNo(++i);
+                if (lastAthlete == null)
+                {
+                    lastAthlete = athlete;
+                } else if (Convert.ToInt32(athlete.startNo) > Convert.ToInt32(lastAthlete.startNo))
+                {
+                    lastAthlete = athlete;
+                }
                 _raceathletes.Add(athlete);
+                previousAthlete = athlete;
+            }
+
+            if (lastAthlete == null) return;
+
+            // add 30 more
+            var startno = Convert.ToInt32(lastAthlete.startNo) + 1;
+            for (var k = startno; k < startno + 30; k++)
+            {
+                lastAthlete = new RaceAthlete(new Athlete(lastAthlete.GetAthlete()));
+                lastAthlete.SetStartNo(k);
+                if (_raceathletes.Any(x => x.startNo == k.ToString()))
+                {
+                    continue;
+                }
+                _raceathletes.Add(lastAthlete);
             }
         }
 

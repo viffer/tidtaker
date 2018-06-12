@@ -102,7 +102,7 @@ namespace UtleiraTidtaker.App
 
             Application.DoEvents();
 
-            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), _excelRepository.GetFiletime());
+            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), dateTimePicker1.Value, _excelRepository.GetFiletime());
 
             textAthletes.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_raceAthletes);
 

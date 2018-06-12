@@ -57,11 +57,14 @@ namespace UtleiraTidtaker.Lib.Repository
             {
                 "10 km",
                 "10 km tineansatt",
+                "10 km uil håndball g15",
                 "5 km",
                 "5 km tineansatt",
+                "5 km uil håndball g15",
                 "5 km trim",
                 "2 km barneløp 7-12",
-                "500m barneløp 4-6"
+                "500m barneløp 4-6",
+                "600m barneløp 3-6"
             };
             var genders = new[] {"Mann", "Kvinne"};
             for (var i = 1; i < 99; i++)

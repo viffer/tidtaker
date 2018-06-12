@@ -1,5 +1,6 @@
 ﻿namespace UtleiraTidtaker.Lib.Model
 {
+    using System;
     public class RaceAthlete
     {
         /*
@@ -28,7 +29,12 @@
          *   }]
          * */
 
-        private readonly Athlete _athlete;
+        private Athlete _athlete;
+
+        internal RaceAthlete(RaceAthlete raceAthlete)
+        {
+            _athlete = new Athlete(raceAthlete._athlete);
+        }
 
         public RaceAthlete(Athlete athlete)
         {
@@ -83,6 +89,11 @@
         public int GetLength()
         {
             return _athlete.Race.GetLength();
+        }
+
+        internal Athlete GetAthlete()
+        {
+            return _athlete;
         }
     }
 }

@@ -10,6 +10,19 @@ namespace UtleiraTidtaker.Lib.Model
             _raceday = raceday;
         }
 
+        internal Athlete(Athlete athlete)
+        {
+            _raceday = athlete._raceday;
+            Id = athlete.Id;
+            Key = athlete.Key;
+            Surname = "";//athlete.Surname;
+            Name = "";//athlete.Name;
+            Club = "";//athlete.Club;
+            Gender = athlete.Gender;
+            Birthdate = athlete.Birthdate;
+            Race = athlete.Race;
+        }
+
         public int Id { get; set; }
         public int Key { get; set; }
         public string Surname { get; set; }
