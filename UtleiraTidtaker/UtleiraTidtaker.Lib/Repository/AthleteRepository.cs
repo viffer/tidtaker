@@ -1,61 +1,37 @@
-﻿namespace UtleiraTidtaker.Lib.Repository
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using UtleiraTidtaker.Lib.Model;
+
+namespace UtleiraTidtaker.Lib.Repository
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-
-    using UtleiraTidtaker.Lib.Model;
-
     public class AthleteRepository
     {
         //private readonly string[] _userColumns = System.Configuration.ConfigurationSettings.AppSettings["UserColumns"].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
         private readonly IList<Athlete> _athletes = new List<Athlete>();
+        private readonly DateTime _raceday;
 
-        public AthleteRepository(DataTable data)
+        public AthleteRepository(DataTable data, DateTime raceday)
         {
+            _raceday = raceday;
             var key = 0;
             var sortedathletes = new SortedList<string, Athlete>();
-            //var i = -1;
-
-            var dict = FindRowNumber(data, new[] { "CompetitorId", "LastName", "Firstname", "ClubName", "Sex", "BirthDay", "BirthMonth", "BirthYear", "EntryClassShortName" });
-
             foreach (DataRow row in data.Rows)
             {
-                //i++;
-                //if (i == 0) continue;
-                //var athlete = new Athlete
-                //{
-                //    Key = key++,
-                //    Id = Convert.ToInt32(row["OrderID"]),
-                //    Surname = row["Etternavn"].ToString(),
-                //    Name = row["Fornavn"].ToString(),
-                //    Club = row["Klubb"].ToString(),
-                //    Gender = row["Kjønn"].ToString(),
-                //    Birthdate = DateTime.Parse(row["Fødselsdato"].ToString()),
-                //    RaceName = row["Distanse/øvelse og klasse"].ToString(),
-                //};
-                var athlete = new Athlete
+                var athlete = new Athlete(_raceday)
                 {
                     Key = key++,
-                    Id = Convert.ToInt32(row[GetDictionaryValue(dict, "CompetitorId")]),
-                    Surname = row[GetDictionaryValue(dict, "LastName")].ToString(),
-                    Name = row[GetDictionaryValue(dict, "Firstname")].ToString(),
-                    Club = row[GetDictionaryValue(dict, "ClubName")].ToString(),
-                    Gender = row[GetDictionaryValue(dict, "Sex")].ToString(),
-                    Birthdate = DateTime.Parse($"{row[GetDictionaryValue(dict, "BirthYear")]}-{row[GetDictionaryValue(dict, "BirthMonth")]}-{row[GetDictionaryValue(dict, "BirthDay")]}"),
-                    RaceName = row[GetDictionaryValue(dict, "EntryClassShortName")].ToString(),
+                    Id = Convert.ToInt32(row["OrderID"]),
+                    Surname = row["Etternavn"].ToString(),
+                    Name = row["Fornavn"].ToString(),
+                    Club = row["Klubb"].ToString(),
+                    Gender = row["Kjønn"].ToString(),
+                    Birthdate = DateTime.Parse(row["Fødselsdato"].ToString()),
+                    RaceName = row["Distanse/øvelse og klasse"].ToString(),
                 };
-                // Fixing wrong ages:
-
-                if (athlete.Id == 208254290)
-                {
-                    var old = athlete.Birthdate;
-                    athlete.Birthdate = new DateTime(2007, old.Month, old.Day);
-                }
-
                 //_athletes.Add(athlete);
-                sortedathletes.Add($"{athlete.Id:0000000}{athlete.Key:0000}", athlete);
+                sortedathletes.Add(string.Format("{0:0000000}{1:0000}", athlete.Id, athlete.Key), athlete);
             }
             _athletes = sortedathletes.Values;
         }
@@ -74,36 +50,43 @@
                 if (raceDictionary.ContainsKey(racename)) continue;
                 raceDictionary.Add(racename, athlete.Race);
             }
+
+
+            // Try to fill the races
+            var racenames = new[]
+            {
+                "10 km",
+                "10 km tineansatt",
+                "5 km",
+                "5 km tineansatt",
+                "5 km trim",
+                "2 km barneløp 7-12",
+                "500m barneløp 4-6"
+            };
+            var genders = new[] {"Mann", "Kvinne"};
+            for (var i = 1; i < 99; i++)
+            {
+                foreach (var racename in racenames)
+                {
+                    foreach (var gender in genders)
+                    {
+                        var athlete = new Athlete(_raceday)
+                        {
+                            Birthdate = DateTime.Now.AddYears(-i),
+                            Gender = gender,
+                            RaceName = racename
+                        };
+                        var rname = athlete.RaceName;
+                        if (raceDictionary.ContainsKey(rname)) continue;
+                        raceDictionary.Add(rname, athlete.Race);
+                    }
+                }
+            }
+
             foreach (var element in raceDictionary)
             {
                 yield return element.Value;
             }
-        }
-
-        private int GetDictionaryValue(Dictionary<string, int> dict, string key)
-        {
-            int value;
-            if (dict.TryGetValue(key, out value)) return value;
-            throw new Exception("Not found!");
-        }
-
-        private Dictionary<string, int> FindRowNumber(DataTable data, string[] names)
-        {
-            var dict = new Dictionary<string, int>();
-
-            foreach (var name in names)
-            {
-                foreach (DataColumn column in data.Columns)
-                {
-                    if (!column.ColumnName.Equals(name, StringComparison.OrdinalIgnoreCase)) continue;
-                    dict.Add(name, column.Ordinal);
-                    break;
-                }
-                if (dict.ContainsKey(name)) continue;
-                dict.Add(name, -1);
-            }
-
-            return dict;
         }
     }
 }

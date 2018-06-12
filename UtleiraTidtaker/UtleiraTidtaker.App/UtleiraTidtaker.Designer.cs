@@ -41,6 +41,9 @@ namespace UtleiraTidtaker.App
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnOpenFile = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -56,9 +59,9 @@ namespace UtleiraTidtaker.App
             // 
             this.listSheetnames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listSheetnames.FormattingEnabled = true;
-            this.listSheetnames.Location = new System.Drawing.Point(616, 35);
+            this.listSheetnames.Location = new System.Drawing.Point(512, 35);
             this.listSheetnames.Name = "listSheetnames";
-            this.listSheetnames.Size = new System.Drawing.Size(120, 121);
+            this.listSheetnames.Size = new System.Drawing.Size(227, 121);
             this.listSheetnames.TabIndex = 3;
             this.listSheetnames.SelectedIndexChanged += new System.EventHandler(this.listSheetnames_SelectedIndexChanged);
             // 
@@ -72,7 +75,7 @@ namespace UtleiraTidtaker.App
             this.tabControl1.Location = new System.Drawing.Point(12, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(598, 480);
+            this.tabControl1.Size = new System.Drawing.Size(498, 480);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
@@ -81,7 +84,7 @@ namespace UtleiraTidtaker.App
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(590, 454);
+            this.tabPage1.Size = new System.Drawing.Size(490, 454);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "json";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -102,7 +105,7 @@ namespace UtleiraTidtaker.App
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textAthletes);
-            this.splitContainer1.Size = new System.Drawing.Size(581, 442);
+            this.splitContainer1.Size = new System.Drawing.Size(481, 442);
             this.splitContainer1.SplitterDistance = 149;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -115,7 +118,7 @@ namespace UtleiraTidtaker.App
             this.textRaces.Multiline = true;
             this.textRaces.Name = "textRaces";
             this.textRaces.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textRaces.Size = new System.Drawing.Size(575, 143);
+            this.textRaces.Size = new System.Drawing.Size(475, 143);
             this.textRaces.TabIndex = 1;
             // 
             // textAthletes
@@ -127,7 +130,7 @@ namespace UtleiraTidtaker.App
             this.textAthletes.Multiline = true;
             this.textAthletes.Name = "textAthletes";
             this.textAthletes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textAthletes.Size = new System.Drawing.Size(575, 283);
+            this.textAthletes.Size = new System.Drawing.Size(475, 283);
             this.textAthletes.TabIndex = 2;
             // 
             // tabPage2
@@ -136,7 +139,7 @@ namespace UtleiraTidtaker.App
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(590, 454);
+            this.tabPage2.Size = new System.Drawing.Size(490, 454);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "data";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -159,7 +162,7 @@ namespace UtleiraTidtaker.App
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 483);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(748, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(751, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -172,12 +175,47 @@ namespace UtleiraTidtaker.App
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(512, 162);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(226, 20);
+            this.dateTimePicker1.TabIndex = 6;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExit.Location = new System.Drawing.Point(662, 456);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 7;
+            this.btnExit.Text = "Avslutt";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnOpenFile
+            // 
+            this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenFile.Location = new System.Drawing.Point(581, 456);
+            this.btnOpenFile.Name = "btnOpenFile";
+            this.btnOpenFile.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFile.TabIndex = 8;
+            this.btnOpenFile.Text = "Åpne fil";
+            this.btnOpenFile.UseVisualStyleBackColor = true;
+            this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
+            // 
             // UtleiraTidtaker
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 505);
+            this.ClientSize = new System.Drawing.Size(751, 505);
+            this.Controls.Add(this.btnOpenFile);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.listSheetnames);
@@ -214,6 +252,9 @@ namespace UtleiraTidtaker.App
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnOpenFile;
     }
 }
 

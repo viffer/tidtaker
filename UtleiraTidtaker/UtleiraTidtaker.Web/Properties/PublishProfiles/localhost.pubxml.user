@@ -109,10 +109,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2016 08:36:36</publishTime>
     </File>
     <File Include="bin/UtleiraTidtaker.Lib.dll">
-      <publishTime>02/27/2017 22:59:36</publishTime>
+      <publishTime>06/17/2016 08:36:36</publishTime>
     </File>
     <File Include="bin/UtleiraTidtaker.Web.dll">
-      <publishTime>02/27/2017 22:59:38</publishTime>
+      <publishTime>06/17/2016 08:56:34</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>06/16/2016 23:30:50</publishTime>
@@ -199,7 +199,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2016 22:32:18</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/27/2017 22:04:09</publishTime>
+      <publishTime>06/17/2016 08:56:34</publishTime>
     </File>
   </ItemGroup>
 </Project>

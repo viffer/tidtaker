@@ -58,7 +58,7 @@ namespace UtleiraTidtaker.Web.Controllers
                     foreach (var sheetName in excelRepository.GetSheetNames())
                     {
                         var exceldata = excelRepository.Load(sheetName);
-                        var athleteRepository = new AthleteRepository(exceldata);
+                        var athleteRepository = new AthleteRepository(exceldata, new DateTime());
                         var races = athleteRepository.GetRaces().ToList();
                         racejson = Newtonsoft.Json.JsonConvert.SerializeObject(races);
                         var raceAthletes = new RaceAthletes(athleteRepository.GetAthletes(), excelRepository.GetFiletime());

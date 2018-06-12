@@ -4,7 +4,11 @@ namespace UtleiraTidtaker.Lib.Model
 {
     public class Athlete
     {
-        private DateTime _birthdate;
+        private DateTime _raceday;
+        public Athlete(DateTime raceday)
+        {
+            _raceday = raceday;
+        }
 
         public int Id { get; set; }
         public int Key { get; set; }
@@ -12,28 +16,14 @@ namespace UtleiraTidtaker.Lib.Model
         public string Name { get; set; }
         public string Club { get; set; }
         public string Gender { get; set; }
-
-        public DateTime Birthdate
-        {
-            get { return _birthdate; }
-            set
-            {
-                _birthdate = value;
-                Race = new Race("", _birthdate.Year, Gender.Equals("m", StringComparison.OrdinalIgnoreCase));
-            }
-        }
+        public DateTime Birthdate { get; set; }
 
         public string RaceName
         {
             get { return Race.key; }
-            set { Race = new Race(value, _birthdate.Year, Gender.Equals("m", StringComparison.OrdinalIgnoreCase)); }
+            set { Race = new Race(value, Birthdate.Year, Gender.Equals("mann", StringComparison.OrdinalIgnoreCase), _raceday); }
         }
 
         public Race Race { get; private set; }
-
-        public void SetRace(Race race)
-        {
-            this.Race = race;
-        }
     }
 }

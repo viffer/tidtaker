@@ -1,10 +1,10 @@
-﻿namespace UtleiraTidtaker.Lib.Model
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using UtleiraTidtaker.Lib.Utilities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UtleiraTidtaker.Lib.Utilities;
 
+namespace UtleiraTidtaker.Lib.Model
+{
     public class RaceAthletes
     {
         /*
@@ -59,16 +59,11 @@
             var sortedList = new SortedList<string, RaceAthlete>();
             foreach (var athlete in _athletes)
             {
-                var genderKey = athlete.Gender.Equals("M") ? 1 : 2;
-                var birthdateKey = athlete.Birthdate.Year >= 2009 ? 2009 : athlete.Birthdate.Year;
-                var key = $"{2017 - birthdateKey:00}-{genderKey}-{athlete.Race.GetLength():00000}-{athlete.Id:00000000}-{athlete.Key:0000}";
+                var key = string.Format("{0:00000}-{1:00000000}-{2:0000}", athlete.Race.GetLength(), athlete.Id, athlete.Key);
                 sortedList.Add(key, new RaceAthlete(athlete));
             }
             var i = 0;
             var previousLength = 0;
-            var previousNumber = 0;
-            var previousGender = "";
-            Race previousRace = null;
             _raceathletes = new List<RaceAthlete>();
             foreach (var element in sortedList)
             {
@@ -79,55 +74,29 @@
                     previousLength = newLength;
                     switch (newLength)
                     {
-                        case 5000:
-                            //200 til 275 på 10km
-                            //i = 300;
-                            //break;
-                        case 3000:
-                            //76 til 200 på 5km
-                            //i = 200;
-                            //break;
-                        case 2000:
-                            //76 til 200 på 5km
-                            //i = 120;
-                            //break;
-                        case 1000:
-                            // 1-75 på 2km
-                            //i = 35;
-                            i += 8;
+                        case 10000:
+                            //200 til 299 på 10km
+                            i = 199;
                             break;
-                        case 500:
+                        case 5000:
+                            //1 til 99 på 5km
                             i = 0;
                             break;
+                        case 2000:
+                            // 400-499 på 2km
+                            i = 399;
+                            break;
+                        case 600:
+                            i = 449;
+                            break;
                         default:
-                            //176 til 200 på Trim
-                            i = 2000;
+                            //400++ på Trim
+                            i = 499;
                             break;
                     }
-                } else if (!previousGender.Equals(athlete.GetGender()))
-                {
-                    i += 4;
-                }
-                while (previousNumber - i < 0)
-                {
-                    var dummy = new RaceAthlete(new Athlete());
-                    dummy.SetRace(previousRace);
-                    dummy.SetStartNo(++previousNumber);
-                    _raceathletes.Add(dummy);
                 }
                 athlete.SetStartNo(++i);
-                previousNumber = i;
-                previousGender = athlete.GetGender();
-                previousRace = athlete.GetRace();
                 _raceathletes.Add(athlete);
-            }
-
-            for (var j = i; j < i + 20; j++)
-            {
-                var dummy = new RaceAthlete(new Athlete());
-                dummy.SetRace(previousRace);
-                dummy.SetStartNo(j + 1);
-                _raceathletes.Add(dummy);
             }
         }
 
@@ -143,26 +112,6 @@
                     test.Add(Convert.ToInt32(athlete.startNo), athlete);
                 }
                 return test.Values;
-            }
-        }
-
-        public IEnumerable<Race> GetRaces()
-        {
-            Race previousRace = null;
-            foreach (var athlete in _raceathletes)
-            {
-                if (previousRace == null)
-                {
-                    previousRace = athlete.GetRace();
-                    previousRace.SetStartTime(athlete.GetStartTime());
-                    yield return previousRace;
-                }
-                else if (!previousRace.key.Equals(athlete.GetRace().key))
-                {
-                    previousRace = athlete.GetRace();
-                    previousRace.SetStartTime(athlete.GetStartTime());
-                    yield return previousRace;
-                }
             }
         }
     }

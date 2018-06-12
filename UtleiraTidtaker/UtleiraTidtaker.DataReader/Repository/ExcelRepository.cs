@@ -1,21 +1,22 @@
-﻿namespace UtleiraTidtaker.DataReader.Repository
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.OleDb;
-    using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 
+namespace UtleiraTidtaker.DataReader.Repository
+{
     public class ExcelRepository : IDisposable
     {
         private readonly string _path;
+        private readonly string _connectionString;
         private readonly OleDbConnection _connection;
 
         public ExcelRepository(string path)
         {
             _path = path;
-            // http://www.microsoft.com/en-us/download/confirmation.aspx?id=13255
-            _connection = new OleDbConnection($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={_path};Extended Properties='Excel 8.0;HDR=YES;';");
+            _connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES;';", _path);
+            _connection = new OleDbConnection(_connectionString);
         }
 
         public IEnumerable<string> GetSheetNames()

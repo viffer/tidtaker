@@ -39,150 +39,91 @@ namespace UtleiraTidtaker.Lib.Model
 
         private DateTime _raceTime;
 
-        public Race(string name, int year, bool male)
+        public Race(string name, int year, bool male, DateTime raceday)
         {
             var age = DateTime.Now.Year - year;
             var raceage = "";
             var raceagestring = "";
-            if (age < 9)
+            key = male ? "G" : "J";
+            var gender = male ? "Gutter" : "Jenter";
+
+            if (age < 13)
             {
                 raceage = "1";
-                raceagestring = "8";
-            }
-            else if (age < 10)
-            {
-                raceage = "2";
-                raceagestring = "9";
-            }
-            else if (age < 11)
-            {
-                raceage = "3";
-                raceagestring = "10";
-            }
-            else if (age < 12)
-            {
-                raceage = "4";
-                raceagestring = "11";
-            }
-            else if (age < 13)
-            {
-                raceage = "5";
-                raceagestring = "12";
-            }
-            else if (age < 14)
-            {
-                raceage = "6";
-                raceagestring = "13";
+                raceagestring = "11 - 12";
             }
             else if (age < 15)
             {
-                raceage = "7";
-                raceagestring = "14";
+                raceage = "2";
+                raceagestring = "13 - 14";
             }
-            else if (age < 16)
+            else if (age < 17)
             {
-                raceage = "8";
-                raceagestring = "15";
+                raceage = "3";
+                raceagestring = "15 - 16";
+            }
+            else if (age < 23)
+            {
+                raceage = "4";
+                raceagestring = "17 - 22";
+                gender = male ? "Junior menn" : "Junior kvinner";
+            }
+            else if (age < 35)
+            {
+                raceage = "4";
+                raceagestring = "23 - 34";
+                gender = male ? "Senior menn" : "Senior kvinner";
+            }
+            else if (age < 50)
+            {
+                raceage = "5";
+                raceagestring = "35 - 49";
+                gender = male ? "Veteran menn" : "Veteran kvinner";
             }
             else
             {
-                raceage = "9";
-                raceagestring = "16";
+                raceage = "6";
+                raceagestring = "50+";
+                gender = male ? "Eldre veteran menn" : "Eldre veteran kvinner";
             }
 
-            key = male ? "G" : "J";
-            var gender = male ? "Gutter" : "Jenter";
             this.name = name;
-            var raceLength = "";
             switch (this.name.ToLowerInvariant())
             {
-                case "g 8 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 0, 0);
-                    raceLength = "500 m";
+                case "10 km":
+                case "10 km tineansatt":
+                case "10 km uil håndball g15":
+                    key = string.Format("{0}10KM", key);
+                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 15, raceday.Second);
+                    this.name = male ? "Menn 10km" : "Kvinner 10km";
                     break;
-                case "j 8 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
-                    raceLength = "500 m";
+                case "5 km":
+                case "5 km tineansatt":
+                case "5 km uil håndball g15":
+                    key = string.Format("{0}{1}5KM", raceage, key);
+                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
+                    this.name = string.Format("{0} {1} {2} år", gender, this.name, raceagestring);
                     break;
-                case "g 9 år":
-                    //key = $"{raceage}{key}1KM";
-                    _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
-                    raceLength = "1 km";
+                case "5 km trim":
+                    key = "TRIM";
+                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
+                    this.name = "Trimklasse uten tidtakning";
                     break;
-                case "j 9 år":
-                    //key = $"{raceage}{key}1KM";
-                    _raceTime = new DateTime(2017, 3, 4, 11, 5, 0);
-                    raceLength = "1 km";
+                case "2 km barneløp 7-12":
+                    key = "2KM";
+                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute + 15, raceday.Second);
+                    this.name = "Barneløp 2 km, 7 - 12 år";
                     break;
-                case "g 10 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "1 km";
-                    break;
-                case "j 10 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "1 km";
-                    break;
-                case "g 11 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "2 km";
-                    break;
-                case "j 11 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "2 km";
-                    break;
-                case "g 12 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "2 km";
-                    break;
-                case "j 12 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "2 km";
-                    break;
-                case "g 13 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "3 km";
-                    break;
-                case "j 13 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "3 km";
-                    break;
-                case "g 14 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "3 km";
-                    break;
-                case "j 14 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "3 km";
-                    break;
-                case "g 15 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "5 km";
-                    break;
-                case "j 15 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "5 km";
-                    break;
-                case "g 16 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "5 km";
-                    break;
-                case "j 16 år":
-                    _raceTime = new DateTime(2017, 3, 4, 11, 30, 0);
-                    raceLength = "5 km";
+                case "500m barneløp 4-6":
+                case "600m barneløp 3-6":
+                    key = "600M";
+                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute, raceday.Second);
+                    this.name = "Barneløp 600 meter, 3 - 6 år";
                     break;
                 default:
-                    //key = this.name;
-                    _raceTime = new DateTime(2017, 3, 4, 11, 0, 0);
-                    //this.name = $"{gender} {name} {raceagestring}";
-                    break;
+                    throw new Exception($"Illegal string: {this.name}");
             }
-            //key = $"{raceage}{key}{raceagestring}";
-            key = $"{key}{raceagestring}";
-            //this.name = $"{gender} {raceagestring} år";
-            this.name = $"{gender} {raceagestring} år - {raceLength}";
         }
-
-        public int Id { get; set; }
 
         public int GetLength()
         {
@@ -204,29 +145,67 @@ namespace UtleiraTidtaker.Lib.Model
             {
                 switch (key.ToLowerInvariant())
                 {
-                    case "g8":
-                    case "j8":
-                        return 500;
-                    case "g9":
-                    case "j9":
-                    case "g10":
-                    case "j10":
-                        return 1000;
-                    case "g11":
-                    case "j11":
-                    case "g12":
-                    case "j12":
-                        return 2000;
-                    case "g13":
-                    case "j13":
-                    case "g14":
-                    case "j14":
-                        return 3000;
-                    case "g15":
-                    case "j15":
-                    case "g16":
-                    case "j16":
+                    case "d10km":
+                    case "m10km":
+                    case "1d10km":
+                    case "2d10km":
+                    case "3d10km":
+                    case "4d10km":
+                    case "5d10km":
+                    case "6d10km":
+                    case "1m10km":
+                    case "2m10km":
+                    case "3m10km":
+                    case "4m10km":
+                    case "5m10km":
+                    case "6m10km":
+                    case "j10km":
+                    case "g10km":
+                    case "1j10km":
+                    case "2j10km":
+                    case "3j10km":
+                    case "4j10km":
+                    case "5j10km":
+                    case "6j10km":
+                    case "1g10km":
+                    case "2g10km":
+                    case "3g10km":
+                    case "4g10km":
+                    case "5g10km":
+                    case "6g10km":
+                        return 10000;
+                    case "1d5km":
+                    case "2d5km":
+                    case "3d5km":
+                    case "4d5km":
+                    case "5d5km":
+                    case "6d5km":
+                    case "1m5km":
+                    case "2m5km":
+                    case "3m5km":
+                    case "4m5km":
+                    case "5m5km":
+                    case "6m5km":
+                    case "1j5km":
+                    case "2j5km":
+                    case "3j5km":
+                    case "4j5km":
+                    case "5j5km":
+                    case "6j5km":
+                    case "1g5km":
+                    case "2g5km":
+                    case "3g5km":
+                    case "4g5km":
+                    case "5g5km":
+                    case "6g5km":
                         return 5000;
+                    case "trim":
+                        return 4999;
+                    case "2km":
+                        return 2000;
+                    case "500m":
+                    case "600m":
+                        return 600;
                     default:
                         return -1;
                 }
@@ -238,14 +217,9 @@ namespace UtleiraTidtaker.Lib.Model
             get { return RaceTimeParser.GetTimestring(_raceTime); }
         }
 
-        public DateTime dStartTime
-        {
-            get { return _raceTime; }
-        }
-
         public string intervalTime
         {
-            get { return "1"; }
+            get { return "0"; }
         }
 
         public string noStart
@@ -259,11 +233,6 @@ namespace UtleiraTidtaker.Lib.Model
             {
                 return Length < 3000 ? "False" : "True";
             }
-        }
-
-        public void SetStartTime(DateTime value)
-        {
-            _raceTime = value;
         }
     }
 }

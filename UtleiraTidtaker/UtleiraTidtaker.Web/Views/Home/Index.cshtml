@@ -8,10 +8,6 @@
 <script type="text/javascript">
     function previewFile(iid) {
         var file = document.querySelector(iid).files[0];
-        openFile(file);
-    }
-
-    function openFile(file) {
         var reader = new FileReader();
         var filename;
         reader.onloadend = function () {
@@ -20,7 +16,7 @@
                 async: false,
                 url: "@posturl?file=" + filename,
                 data: reader.result,
-            }).success(function (data) {
+            }).success(function(data) {
                 $("#races").val(data.Data.races);
                 $("#athletes").val(data.Data.athletes);
             });
@@ -30,30 +26,6 @@
             filename = file.name;
             reader.readAsDataURL(file);
         }
-    }
-
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        var files = evt.dataTransfer.files; // FileList object.
-
-        // files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0, f; f = files[i]; i++) {
-            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                f.size, ' bytes, last modified: ',
-                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                '</li>');
-        }
-        document.getElementById('file_list2').innerHTML = '<ul>' + output.join('') + '</ul>';
-        openFile(files[0]);
-    }
-
-    function handleDragOver(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     }
 
     $(document).ready(function() {
@@ -79,35 +51,8 @@
                 return false;
             });
         });
-
-        // Setup the dnd listeners.
-        var dropZone = document.getElementById('drop_zone');
-        dropZone.addEventListener('dragover', handleDragOver, false);
-        dropZone.addEventListener('drop', handleFileSelect, false);
     });
-
 </script>
-<style>
-.example {
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-#drop_zone {
-    border: 2px dashed #bbb;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    padding: 25px;
-    text-align: center;
-    font: 20pt bold 'Vollkorn';
-    color: #bbb;
-}
-#drop_zone:hover {
-    border: 2px dashed #20aaac;
-    color: #20aaac;
-    font-weight: bold;
-}
-</style>
 <form enctype="multipart/form-data" id="ajaxUploadForm" novalidate="novalidate">
 
     <fieldset>
@@ -119,10 +64,6 @@
         </ul>
     </fieldset>
 </form>
-<div class="example">
-    <div id="drop_zone">Drop files here</div>
-    <output id="file_list2"></output>
-</div>
 <fieldset>
     Races:<br/>
     <textarea id="races" style="max-width: initial !important; width: 100%;"></textarea>

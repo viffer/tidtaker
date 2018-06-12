@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AthleteRepository.cs" />
     <Compile Include="Model\RaceAthlete.cs" />
+    <Compile Include="Repository\RaceRepository.cs" />
     <Compile Include="Utilities\RaceTimeParser.cs" />
   </ItemGroup>
   <ItemGroup />
