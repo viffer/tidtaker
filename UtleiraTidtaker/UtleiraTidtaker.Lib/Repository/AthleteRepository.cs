@@ -28,10 +28,10 @@ namespace UtleiraTidtaker.Lib.Repository
                     Club = row["Klubb"].ToString(),
                     Gender = row["Kjønn"].ToString(),
                     Birthdate = DateTime.Parse(row["Fødselsdato"].ToString()),
-                    RaceName = row["Distanse/øvelse og klasse"].ToString(),
+                    RaceName = row["Distanse/øvelse og klasse"].ToString()
                 };
                 //_athletes.Add(athlete);
-                sortedathletes.Add(string.Format("{0:0000000}{1:0000}", athlete.Id, athlete.Key), athlete);
+                sortedathletes.Add($"{athlete.Id:0000000}{athlete.Key:0000}", athlete);
             }
             _athletes = sortedathletes.Values;
         }

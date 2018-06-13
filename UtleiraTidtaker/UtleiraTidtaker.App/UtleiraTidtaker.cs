@@ -89,7 +89,7 @@ namespace UtleiraTidtaker.App
             }
             listSheetnames.SelectedItem = listSheetnames.Items[0];
         }
-
+        
         private void listSheetnames_SelectedIndexChanged(object sender, EventArgs e)
         {
             var data = _excelRepository.Load(listSheetnames.SelectedItem.ToString());
@@ -107,7 +107,7 @@ namespace UtleiraTidtaker.App
             textAthletes.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_raceAthletes);
 
             _stopwatch.Stop();
-            toolStripStatusLabel1.Text = string.Format("{0:HH:mm:ss} - {1:F}", DateTime.Now, _stopwatch.Elapsed.TotalSeconds);
+            toolStripStatusLabel1.Text = $"{DateTime.Now:HH:mm:ss} - {_stopwatch.Elapsed.TotalSeconds:F}";
         }
 
         private void ListSheetnames_Click(object sender, EventArgs e)
@@ -119,13 +119,21 @@ namespace UtleiraTidtaker.App
         private void TextAthletes_MouseUp(object sender, EventArgs e)
         {
             textAthletes.SelectAll();
-            if (!string.IsNullOrEmpty(textAthletes.Text)) Clipboard.SetText(textAthletes.Text);
+            if (!string.IsNullOrEmpty(textAthletes.Text))
+            {
+                Clipboard.SetText(textAthletes.Text);
+                toolStripStatusLabel1.Text = "Copied athletes";
+            }
         }
 
         private void TextRaces_MouseUp(object sender, EventArgs e)
         {
             textRaces.SelectAll();
-            if (!string.IsNullOrEmpty(textRaces.Text)) Clipboard.SetText(textRaces.Text);
+            if (!string.IsNullOrEmpty(textRaces.Text))
+            {
+                Clipboard.SetText(textRaces.Text);
+                toolStripStatusLabel1.Text = "Copied races";
+            }
         }
 
         private void btnOpenFile_Click(object sender, EventArgs e)
