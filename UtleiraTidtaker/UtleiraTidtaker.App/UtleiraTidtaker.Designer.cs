@@ -38,6 +38,10 @@ namespace UtleiraTidtaker.App
             this.textAthletes = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.startno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -52,6 +56,8 @@ namespace UtleiraTidtaker.App
             this.splitContainer1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +78,7 @@ namespace UtleiraTidtaker.App
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -156,6 +163,38 @@ namespace UtleiraTidtaker.App
             this.dataGridView1.Size = new System.Drawing.Size(578, 445);
             this.dataGridView1.TabIndex = 2;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.dataGridView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(490, 454);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "config";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.length,
+            this.startno});
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(490, 454);
+            this.dataGridView2.TabIndex = 0;
+            // 
+            // length
+            // 
+            this.length.HeaderText = "Length (m)";
+            this.length.Name = "length";
+            // 
+            // startno
+            // 
+            this.startno.HeaderText = "Start Number";
+            this.startno.Name = "startno";
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -232,6 +271,8 @@ namespace UtleiraTidtaker.App
             this.splitContainer1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -255,6 +296,10 @@ namespace UtleiraTidtaker.App
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnOpenFile;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn length;
+        private System.Windows.Forms.DataGridViewTextBoxColumn startno;
     }
 }
 

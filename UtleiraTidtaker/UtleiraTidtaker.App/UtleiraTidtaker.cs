@@ -18,6 +18,18 @@ namespace UtleiraTidtaker.App
         private RaceAthletes _raceAthletes;
         private Stopwatch _stopwatch;
         private int _exitPressCount;
+        private Config _config = new Config
+                     {
+                         StartNumbers =
+                             new Dictionary<int, int>
+                             {
+                                 {10000, 200},
+                                 {5000, 1},
+                                 {2000, 400},
+                                 {600, 450},
+                                 {4999, 500}
+                             }
+                     };
 
         public UtleiraTidtaker()
         {
@@ -31,6 +43,12 @@ namespace UtleiraTidtaker.App
             this.KeyPress += UtleiraTidtaker_OnKeyPress;
             _stopwatch = new Stopwatch();
             dateTimePicker1.Value = new DateTime(2018, 06, 17, 11, 0, 0);
+
+            var i = 0;
+            foreach (var config in _config.StartNumbers)
+            {
+                dataGridView2.Rows.Insert(i++, config.Key, config.Value);
+            }
         }
 
         private void UtleiraTidtaker_OnKeyPress(object sender, KeyPressEventArgs keyPressEventArgs)
@@ -95,18 +113,15 @@ namespace UtleiraTidtaker.App
             var data = _excelRepository.Load(listSheetnames.SelectedItem.ToString());
             dataGridView1.DataSource = data;
 
-            var config = new Config
-                         {
-                             StartNumbers =
-                                 new Dictionary<int, int>
-                                 {
-                                     {10000, 200},
-                                     {5000, 1},
-                                     {2000, 400},
-                                     {600, 450},
-                                     {4999, 500}
-                                 }
-                         };
+            var config = new Config {StartNumbers = new Dictionary<int, int>()};
+
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                if (row.IsNewRow) continue;
+                config.StartNumbers.Add(Convert.ToInt32(row.Cells[0].Value), Convert.ToInt32(row.Cells[1].Value));
+            }
+
+            toolStripStatusLabel1.Text = Newtonsoft.Json.JsonConvert.SerializeObject(config);
 
             _athleteRepository = new AthleteRepository(data, dateTimePicker1.Value);
 
