@@ -95,6 +95,19 @@ namespace UtleiraTidtaker.App
             var data = _excelRepository.Load(listSheetnames.SelectedItem.ToString());
             dataGridView1.DataSource = data;
 
+            var config = new Config
+                         {
+                             StartNumbers =
+                                 new Dictionary<int, int>
+                                 {
+                                     {10000, 200},
+                                     {5000, 1},
+                                     {2000, 400},
+                                     {600, 450},
+                                     {4999, 500}
+                                 }
+                         };
+
             _athleteRepository = new AthleteRepository(data, dateTimePicker1.Value);
 
             var races = _athleteRepository.GetRaces().ToList();
@@ -102,7 +115,7 @@ namespace UtleiraTidtaker.App
 
             Application.DoEvents();
 
-            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), dateTimePicker1.Value, _excelRepository.GetFiletime());
+            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), dateTimePicker1.Value, _excelRepository.GetFiletime(), config);
 
             textAthletes.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_raceAthletes);
 

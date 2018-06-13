@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Athlete.cs" />
+    <Compile Include="Model\Config.cs" />
     <Compile Include="Model\RaceAthletes.cs" />
     <Compile Include="Model\Race.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
