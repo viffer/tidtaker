@@ -42,6 +42,7 @@ namespace UtleiraTidtaker.App
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.startTimeOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -178,12 +179,14 @@ namespace UtleiraTidtaker.App
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.length,
-            this.startno});
+            this.startno,
+            this.startTimeOffset});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(0, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(490, 454);
             this.dataGridView2.TabIndex = 0;
+            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
             // 
             // length
             // 
@@ -194,6 +197,12 @@ namespace UtleiraTidtaker.App
             // 
             this.startno.HeaderText = "Start Number";
             this.startno.Name = "startno";
+            // 
+            // startTimeOffset
+            // 
+            this.startTimeOffset.HeaderText = "Start Time Offset (min)";
+            this.startTimeOffset.Name = "startTimeOffset";
+            this.startTimeOffset.Width = 150;
             // 
             // statusStrip1
             // 
@@ -300,6 +309,7 @@ namespace UtleiraTidtaker.App
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn length;
         private System.Windows.Forms.DataGridViewTextBoxColumn startno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn startTimeOffset;
     }
 }
 

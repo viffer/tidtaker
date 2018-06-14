@@ -11,15 +11,17 @@ namespace UtleiraTidtaker.Lib.Repository
         //private readonly string[] _userColumns = System.Configuration.ConfigurationSettings.AppSettings["UserColumns"].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
         private readonly IList<Athlete> _athletes = new List<Athlete>();
         private readonly DateTime _raceday;
+        private readonly Config _config;
 
-        public AthleteRepository(DataTable data, DateTime raceday)
+        public AthleteRepository(DataTable data, DateTime raceday, Config config)
         {
             _raceday = raceday;
+            _config = config;
             var key = 0;
             var sortedathletes = new SortedList<string, Athlete>();
             foreach (DataRow row in data.Rows)
             {
-                var athlete = new Athlete(_raceday)
+                var athlete = new Athlete(_raceday, _config)
                 {
                     Key = key++,
                     Id = Convert.ToInt32(row["OrderID"]),
@@ -73,7 +75,7 @@ namespace UtleiraTidtaker.Lib.Repository
                 {
                     foreach (var gender in genders)
                     {
-                        var athlete = new Athlete(_raceday)
+                        var athlete = new Athlete(_raceday, _config)
                         {
                             Birthdate = DateTime.Now.AddYears(-i),
                             Gender = gender,

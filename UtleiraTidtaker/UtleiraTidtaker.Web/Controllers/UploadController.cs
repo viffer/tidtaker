@@ -22,6 +22,27 @@ namespace UtleiraTidtaker.Web.Controllers
     {
         private const string ProjectUploadFolder = @"c:\temp\UtleiraTidtaker.Web";
         private static readonly string ServerUploadFolder = Path.GetTempPath();
+        private Config _config = new Config
+                                 {
+                                     StartNumbers =
+                                         new Dictionary<int, int>
+                                         {
+                                             {10000, 200},
+                                             {5000, 1},
+                                             {2000, 400},
+                                             {600, 450},
+                                             {4999, 500}
+                                         },
+                                     StartTimeOffset =
+                                         new Dictionary<int, int>
+                                         {
+                                             {10000, 75},
+                                             {5000, 90},
+                                             {2000, 15},
+                                             {600, 0},
+                                             {4999, 90}
+                                         }
+                                 };
 
         [System.Web.Http.Route("file")]
         [System.Web.Http.HttpPost]
@@ -58,10 +79,10 @@ namespace UtleiraTidtaker.Web.Controllers
                     foreach (var sheetName in excelRepository.GetSheetNames())
                     {
                         var exceldata = excelRepository.Load(sheetName);
-                        var athleteRepository = new AthleteRepository(exceldata, new DateTime());
+                        var athleteRepository = new AthleteRepository(exceldata, new DateTime(), _config);
                         var races = athleteRepository.GetRaces().ToList();
                         racejson = Newtonsoft.Json.JsonConvert.SerializeObject(races);
-                        var raceAthletes = new RaceAthletes(athleteRepository.GetAthletes(), excelRepository.GetFiletime());
+                        var raceAthletes = new RaceAthletes(athleteRepository.GetAthletes(), DateTime.Now, excelRepository.GetFiletime(), _config);
                         athletejson = Newtonsoft.Json.JsonConvert.SerializeObject(raceAthletes);
                         break;
                     }

@@ -4,10 +4,13 @@ namespace UtleiraTidtaker.Lib.Model
 {
     public class Athlete
     {
-        private DateTime _raceday;
-        public Athlete(DateTime raceday)
+        private readonly DateTime _raceday;
+        private readonly Config _config;
+
+        public Athlete(DateTime raceday, Config config)
         {
             _raceday = raceday;
+            _config = config;
         }
 
         internal Athlete(Athlete athlete)
@@ -34,7 +37,7 @@ namespace UtleiraTidtaker.Lib.Model
         public string RaceName
         {
             get { return Race.key; }
-            set { Race = new Race(value, Birthdate.Year, Gender.Equals("mann", StringComparison.OrdinalIgnoreCase), _raceday); }
+            set { Race = new Race(value, Birthdate.Year, Gender.Equals("mann", StringComparison.OrdinalIgnoreCase), _raceday, _config); }
         }
 
         public Race Race { get; private set; }

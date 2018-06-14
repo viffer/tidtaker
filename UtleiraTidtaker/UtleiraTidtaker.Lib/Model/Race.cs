@@ -38,10 +38,12 @@ namespace UtleiraTidtaker.Lib.Model
          * */
 
         private DateTime _raceTime;
+        private readonly Config _config;
         private int raceLength = -1;
 
-        public Race(string name, int year, bool male, DateTime raceday)
+        public Race(string name, int year, bool male, DateTime raceday, Config config)
         {
+            _config = config;
             var age = DateTime.Now.Year - year;
             var raceage = "";
             var raceagestring = "";
@@ -95,7 +97,7 @@ namespace UtleiraTidtaker.Lib.Model
                 case "10 km tineansatt":
                 case "10 km uil håndball g15":
                     key = $"10KM{key}";
-                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 15, raceday.Second);
+                    // _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 15, raceday.Second);
                     this.name = male ? "Menn 10km" : "Kvinner 10km";
                     raceLength = 10000;
                     break;
@@ -103,32 +105,33 @@ namespace UtleiraTidtaker.Lib.Model
                 case "5 km tineansatt":
                 case "5 km uil håndball g15":
                     key = $"5KM{key}{raceage}";
-                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
+                    // _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
                     this.name = $"{gender} 5km {raceagestring} år";
                     raceLength = 5000;
                     break;
                 case "5 km trim":
                     key = "TRIM";
-                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
+                    // _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour + 1, raceday.Minute + 30, raceday.Second);
                     this.name = "Trimklasse uten tidtakning";
                     raceLength = 4999;
                     break;
                 case "2 km barneløp 7-12":
                     key = "2KM";
-                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute + 15, raceday.Second);
+                    // _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute + 15, raceday.Second);
                     this.name = "Barneløp 2 km, 7 - 12 år";
                     raceLength = 2000;
                     break;
                 case "500m barneløp 4-6":
                 case "600m barneløp 3-6":
                     key = "600M";
-                    _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute, raceday.Second);
+                    // _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute, raceday.Second);
                     this.name = "Barneløp 600 meter, 3 - 6 år";
                     raceLength = 600;
                     break;
                 default:
                     throw new Exception($"Illegal string: {this.name}");
             }
+            _raceTime = new DateTime(raceday.Year, raceday.Month, raceday.Day, raceday.Hour, raceday.Minute, raceday.Second).AddMinutes(_config.StartTimeOffset[raceLength]);
         }
 
         public int GetLength()

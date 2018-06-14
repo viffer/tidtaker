@@ -9,7 +9,9 @@ using UtleiraTidtaker.Lib.Repository;
 
 namespace UtleiraTidtaker.App
 {
+    using System.IO;
     using System.Threading;
+    using Properties;
 
     public partial class UtleiraTidtaker : Form
     {
@@ -18,6 +20,7 @@ namespace UtleiraTidtaker.App
         private RaceAthletes _raceAthletes;
         private Stopwatch _stopwatch;
         private int _exitPressCount;
+        private readonly string _settingsFile = Path.Combine(Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf(("\\"))), "app.settings");
         private Config _config = new Config
                      {
                          StartNumbers =
@@ -28,8 +31,17 @@ namespace UtleiraTidtaker.App
                                  {2000, 400},
                                  {600, 450},
                                  {4999, 500}
+                             },
+                         StartTimeOffset =
+                             new Dictionary<int, int>
+                             {
+                                 {10000, 75},
+                                 {5000, 90},
+                                 {2000, 15},
+                                 {600, 0},
+                                 {4999, 90}
                              }
-                     };
+        };
 
         public UtleiraTidtaker()
         {
@@ -44,10 +56,25 @@ namespace UtleiraTidtaker.App
             _stopwatch = new Stopwatch();
             dateTimePicker1.Value = new DateTime(2018, 06, 17, 11, 0, 0);
 
+            if (File.Exists(_settingsFile))
+            {
+                var testconfig = (Config) Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(_settingsFile), _config.GetType());
+                if (testconfig != null)
+                {
+                    _config = testconfig;
+                }
+            }
+
             var i = 0;
             foreach (var config in _config.StartNumbers)
             {
                 dataGridView2.Rows.Insert(i++, config.Key, config.Value);
+            }
+
+            i = 0;
+            foreach (var config in _config.StartTimeOffset)
+            {
+                dataGridView2.Rows[i++].Cells[2].Value = config.Value;
             }
         }
 
@@ -113,24 +140,16 @@ namespace UtleiraTidtaker.App
             var data = _excelRepository.Load(listSheetnames.SelectedItem.ToString());
             dataGridView1.DataSource = data;
 
-            var config = new Config {StartNumbers = new Dictionary<int, int>()};
+            toolStripStatusLabel1.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_config);
 
-            foreach (DataGridViewRow row in dataGridView2.Rows)
-            {
-                if (row.IsNewRow) continue;
-                config.StartNumbers.Add(Convert.ToInt32(row.Cells[0].Value), Convert.ToInt32(row.Cells[1].Value));
-            }
-
-            toolStripStatusLabel1.Text = Newtonsoft.Json.JsonConvert.SerializeObject(config);
-
-            _athleteRepository = new AthleteRepository(data, dateTimePicker1.Value);
+            _athleteRepository = new AthleteRepository(data, dateTimePicker1.Value, _config);
 
             var races = _athleteRepository.GetRaces().ToList();
             textRaces.Text = Newtonsoft.Json.JsonConvert.SerializeObject(races);
 
             Application.DoEvents();
 
-            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), dateTimePicker1.Value, _excelRepository.GetFiletime(), config);
+            _raceAthletes = new RaceAthletes(_athleteRepository.GetAthletes(), dateTimePicker1.Value, _excelRepository.GetFiletime(), _config);
 
             textAthletes.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_raceAthletes);
 
@@ -177,6 +196,31 @@ namespace UtleiraTidtaker.App
         {
             this.Close();
             this.Dispose();
+        }
+
+        private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var config = new Config
+                         {
+                             StartNumbers = new Dictionary<int, int>(),
+                             StartTimeOffset = new Dictionary<int, int>()
+                         };
+
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                if (row.IsNewRow) continue;
+                config.StartNumbers.Add(Convert.ToInt32(row.Cells[0].Value), Convert.ToInt32(row.Cells[1].Value));
+                config.StartTimeOffset.Add(Convert.ToInt32(row.Cells[0].Value), Convert.ToInt32(row.Cells[2].Value));
+            }
+
+            Settings.Default.config = config;
+            Settings.Default.Save();
+
+            _config = config;
+
+            File.WriteAllText(_settingsFile, Newtonsoft.Json.JsonConvert.SerializeObject(_config));
+
+            toolStripStatusLabel1.Text = "saved settings...";
         }
     }
 }
