@@ -60,6 +60,7 @@ namespace UtleiraTidtaker.Lib.Model
 
         private void SetStartNumbers()
         {
+            var maxStartNumber = -1;
             var sortedList = new SortedList<string, RaceAthlete>();
             foreach (var athlete in _athletes)
             {
@@ -103,20 +104,20 @@ namespace UtleiraTidtaker.Lib.Model
                     //        break;
                     //}
 
-                    if (previousAthlete != null)
-                    {
-                        // fill in the gaps
-                        for (var j = i + 1; j <= next; j++)
-                        {
-                            previousAthlete = new RaceAthlete(new Athlete(previousAthlete.GetAthlete()));
-                            previousAthlete.SetStartNo(j);
-                            if (_raceathletes.Any(x => x.startNo == j.ToString()))
-                            {
-                                continue;
-                            }
-                            _raceathletes.Add(previousAthlete);
-                        }
-                    }
+                    //if (previousAthlete != null)
+                    //{
+                    //    // fill in the gaps
+                    //    for (var j = i + 1; j <= next; j++)
+                    //    {
+                    //        previousAthlete = new RaceAthlete(new Athlete(previousAthlete.GetAthlete()));
+                    //        previousAthlete.SetStartNo(j);
+                    //        if (_raceathletes.Any(x => x.startNo == j.ToString()))
+                    //        {
+                    //            continue;
+                    //        }
+                    //        _raceathletes.Add(previousAthlete);
+                    //    }
+                    //}
 
                     i = next;
                 }
@@ -130,6 +131,10 @@ namespace UtleiraTidtaker.Lib.Model
                 }
                 _raceathletes.Add(athlete);
                 previousAthlete = athlete;
+                if (maxStartNumber < Convert.ToInt32(athlete.startNo))
+                {
+                    maxStartNumber = Convert.ToInt32(athlete.startNo);
+                }
             }
 
             if (lastAthlete == null) return;
@@ -145,6 +150,22 @@ namespace UtleiraTidtaker.Lib.Model
                     continue;
                 }
                 _raceathletes.Add(lastAthlete);
+            }
+
+            // verify all numbers
+            // var missingNumbers = new List<int>();
+            for (var num = 1; num <= maxStartNumber; num++)
+            {
+                if (_raceathletes.Any(x => Convert.ToInt32(x.startNo) == num))
+                {
+                    previousAthlete = _raceathletes.FirstOrDefault(x => Convert.ToInt32(x.startNo) == num);
+                    continue;
+                }
+                previousAthlete = new RaceAthlete(new Athlete(previousAthlete.GetAthlete()));
+                previousAthlete.SetStartNo(num);
+                _raceathletes.Add(previousAthlete);
+
+                // missingNumbers.Add(num);
             }
         }
 

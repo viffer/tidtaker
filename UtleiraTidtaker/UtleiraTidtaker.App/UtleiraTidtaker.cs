@@ -21,27 +21,7 @@ namespace UtleiraTidtaker.App
         private Stopwatch _stopwatch;
         private int _exitPressCount;
         private readonly string _settingsFile = Path.Combine(Application.ExecutablePath.Substring(0, Application.ExecutablePath.LastIndexOf(("\\"))), "app.settings");
-        private Config _config = new Config
-                     {
-                         StartNumbers =
-                             new Dictionary<int, int>
-                             {
-                                 {10000, 200},
-                                 {5000, 1},
-                                 {2000, 400},
-                                 {600, 450},
-                                 {4999, 500}
-                             },
-                         StartTimeOffset =
-                             new Dictionary<int, int>
-                             {
-                                 {10000, 75},
-                                 {5000, 90},
-                                 {2000, 15},
-                                 {600, 0},
-                                 {4999, 90}
-                             }
-        };
+        private Config _config = null;
 
         public UtleiraTidtaker()
         {
@@ -58,11 +38,35 @@ namespace UtleiraTidtaker.App
 
             if (File.Exists(_settingsFile))
             {
-                var testconfig = (Config) Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(_settingsFile), _config.GetType());
+                var testconfig = (Config) Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(_settingsFile), (new Config()).GetType());
                 if (testconfig != null)
                 {
                     _config = testconfig;
                 }
+            }
+            if (_config == null)
+            {
+                _config = new Config
+                          {
+                              StartNumbers =
+                                  new Dictionary<int, int>
+                                  {
+                                      {10000, 200},
+                                      {5000, 1},
+                                      {2000, 400},
+                                      {600, 450},
+                                      {4999, 500}
+                                  },
+                              StartTimeOffset =
+                                  new Dictionary<int, int>
+                                  {
+                                      {10000, 75},
+                                      {5000, 90},
+                                      {2000, 15},
+                                      {600, 0},
+                                      {4999, 90}
+                                  }
+                          };
             }
 
             var i = 0;
